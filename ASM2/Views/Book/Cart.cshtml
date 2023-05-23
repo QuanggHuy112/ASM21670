@@ -1,0 +1,73 @@
+﻿@model List<ASM2.Models.Cart>
+
+<h1 class="text-center text-uppercase">Cart</h1>
+
+@if (Model.Count > 0 && User.Identity.IsAuthenticated)
+    {
+        double total = 0;
+        int stt = 1;
+
+        <table class="table">
+            <tr>
+                <th>#</th>
+                <th>Book's title</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th></th>
+            </tr>
+            @foreach (var cartitem in Model)
+            {
+                var thanhtien = cartitem.Quantity * cartitem.Books.Price;
+                total += thanhtien;
+
+                <tr>
+                    <td>@(stt++)</td>
+                    <td>@cartitem.Books.Title</td>
+                    <td>@(cartitem.Books.Price.ToString("0.000"))VND</td>
+                    <td><input asp-for="@cartitem.Quantity" id="@($"quantity-{cartitem.Books.Id}")" /></td>
+                    <td>@(thanhtien.ToString("0.000"))VND</td>
+                    <td>
+                        <button class="btn btn-success updatecartitem" data-bookid="@cartitem.Books.Id">Update</button>
+                        <a asp-route="removecart" asp-route-bookid="@cartitem.Books.Id"
+                           class="btn btn-danger">Remove</a>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="4" class="text-right">Total</td>
+                <td>@(total.ToString("0.000"))VND</td>
+                <td></td>
+            </tr>
+        </table>
+
+        <a asp-controller="Book"  asp-action="Checkout" class="btn btn-success">Order now</a>
+
+        @section Scripts {
+            <script>
+          $(document).ready(function () {
+              $(".updatecartitem").click(function (event) {
+                  event.preventDefault();
+                  var bookid = $(this).attr("data-bookid");
+                  var quantity = $("#quantity-" + bookid).val();
+                  $.ajax({
+                      type: "POST",
+                      url:"@Url.RouteUrl("updatecart")",
+                      data: {
+                          bookid: bookid,
+                          quantity:quantity
+                      },
+                      success: function (result) {
+                          window.location.href = "@Url.RouteUrl("cart")";
+                      }
+                  });
+              });
+          });
+            </script>
+        }
+
+    }
+    else
+    {
+        <p class="alert alert-danger">Empty cart</p>
+    }

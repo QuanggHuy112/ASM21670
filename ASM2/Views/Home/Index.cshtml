@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ASM2.Models.Book>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+   <!-- Section-->
+        <section class="py-5">
+            
+            <div class="container px-4 px-lg-5 mt-5">
+                
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                
+                
+            @foreach(var item in Model){
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                                <img width="263" height="400" src="@item.Image" alt="doraemon" />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">@item.Title</h5>
+                                    <!-- Product price-->
+                                    <span class="text-muted">@(item.Price.ToString("n0")).000VND</span>
+                                    
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <td>
+                                <button type="button" class="btn btn-danger">
+                                    <a style="text-decoration: none;color:white"asp-controller="Book" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                </button>
+                            </td>
+                        </div>
+                    </div>
+                }
+
+                     
+            </div>
+        </section>
+
+
+         

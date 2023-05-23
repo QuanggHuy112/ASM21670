@@ -1,0 +1,54 @@
+﻿@model ASM2.Models.Book
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="text-center text-uppercase">Details</h1>
+
+<div>
+    <h4>Book</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReleaseDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CategoryId)
+        </dd>
+        <dt class = "col-sm-2">
+            Image URL:
+        </dt>
+        <dd class = "col-sm-10">
+            <img src="@Html.DisplayFor(model => model.Image)" height="400" width="auto">
+        </dd>
+    </dl>
+</div>
+<div>
+    <td>
+        <button type="button" class="btn btn-danger">
+            <a style="text-decoration: none;color:white" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        </button>
+        <button type="button" class="btn btn-danger">
+            <a style="text-decoration: none;color:white" asp-action="Index">Back to List</a>
+        </button>
+    </td>
+</div>
